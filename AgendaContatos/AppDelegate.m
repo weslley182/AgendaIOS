@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "ListaContatoViewController.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    ListaContatoViewController *lista = [ListaContatoViewController new];
+    UINavigationController *navLista = [UINavigationController alloc];
+    navLista = [navLista initWithRootViewController:lista];
+    
+    self.window.rootViewController = navLista;
+    
     return YES;
 }
 

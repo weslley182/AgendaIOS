@@ -7,6 +7,8 @@
 //
 
 #import "ListaContatoViewController.h"
+#import "ViewController.h"
+#import "Contato.h"
 
 @interface ListaContatoViewController ()
 
@@ -14,85 +16,73 @@
 
 @implementation ListaContatoViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+-(id) init{
+    self = [super init];
+    if(self){
+        UIBarButtonItem *botaoForm = [[UIBarButtonItem alloc]
+                                  initWithBarButtonSystemItem:UIBarButtonSystemItemAdd                   target:self action:@selector(exibirFormulario)];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+        self.navigationItem.rightBarButtonItem = botaoForm;
+        self.navigationItem.title = @"Lista de contatos";
+        
+        self.navigationItem.leftBarButtonItem = self.editButtonItem;
+        
+        self.contatoDAO = [ContatoDAO contatoDaoInstance];
+    }
+    return self;
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(editingStyle == UITableViewCellEditingStyleDelete){
+        [self removerItemTela:indexPath];
+    }
 }
 
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+-(void)removerItemTela:(NSIndexPath *)pnIndex{
+    Contato *contato = [self.contatoDAO contatoDoIndice:pnIndex.row];
+    [self.contatoDAO removerContato:contato];
+    [self.tableView deleteRowsAtIndexPaths: @[pnIndex] withRowAnimation:UITableViewRowAnimationFade];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+-(void)tableView:(nonnull UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath{
+    self.contatoSelecionado = [self.contatoDAO contatoDoIndice:indexPath.row];
+    [self exibirFormulario];
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+-(void) exibirFormulario{
+    UIStoryboard *storyB = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    ViewController *form = [storyB instantiateViewControllerWithIdentifier:@"Form-Contato"];
     
-    // Configure the cell...
+    if(self.contatoSelecionado){
+        form.contato = self.contatoSelecionado;
+    }
+    self.contatoSelecionado = nil;
+    [self.navigationController pushViewController:form animated:YES];
+    
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return [self.contatoDAO totalContatos];
+}
+
+-(nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:
+(nonnull NSIndexPath *)indexPath{
+    
+    NSString *identificador = @"Celula";
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:identificador];
+    if(!cell){
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identificador];
+    }
+    
+    Contato *contato = [self.contatoDAO contatoDoIndice:indexPath.row];
+    cell.textLabel.text = contato.nome;
     
     return cell;
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+-(void)viewWillAppear:(BOOL)animated{
+    [self.tableView reloadData];
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

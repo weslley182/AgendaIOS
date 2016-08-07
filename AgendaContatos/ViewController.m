@@ -7,22 +7,82 @@
 //
 
 #import "ViewController.h"
+#import "Contato.h"
 
-@interface ViewController ()
-
-@end
 
 @implementation ViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+-(id)initWithCoder: (NSCoder *) aDecoder{
+    self = [super initWithCoder:aDecoder];
+    if(self){
+        //self.navigationItem.rightBarButtonItem = [self receberBotao];
+        self.contatoDAO = [ContatoDAO contatoDaoInstance];
+    }
+    return self;
 }
 
+-(UIBarButtonItem *)receberBotao{
+    if (self.contato){
+        return [self receberBotaoAlterar];
+    }
+    return [self receberBotaoAdicionar];
+}
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(UIBarButtonItem *)receberBotaoAlterar{
+    self.navigationItem.title = @"Alterar contato";
+    return [[UIBarButtonItem alloc]
+            initWithTitle:@"Alterar"
+            style:UIBarButtonItemStylePlain
+            target:self
+            action:@selector(alterar)];
+}
+
+-(UIBarButtonItem *)receberBotaoAdicionar{
+    self.navigationItem.title = @"Novo contato";
+    return [[UIBarButtonItem alloc]
+           initWithTitle:@"Adicionar"
+            style:UIBarButtonItemStylePlain
+            target:self
+            action:@selector(adicionar)];
+}
+
+-(void) viewDidLoad{
+    [super viewDidLoad];
+    self.navigationItem.rightBarButtonItem = [self receberBotao];
+    [self carregarDadosTelaContato];
+}
+
+-(void)carregarDadosTelaContato{
+    
+    if(!self.contato){
+        return;
+    }
+    self.nome.text = self.contato.nome;
+    self.endereco.text = self.contato.endereco;
+    self.telefone.text = self.contato.telefone;
+    self.site.text = self.contato.site;
+    self.email.text = self.contato.email;
+}
+
+-(void)alterar{
+    [self carregarContatos];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void) adicionar {
+    self.contato = [Contato new];
+    [self carregarContatos];
+    [self.contatoDAO AdicionarContato: self.contato];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void) carregarContatos{
+    self.contato.nome = self.nome.text;
+    self.contato.endereco = self.endereco.text;
+    self.contato.telefone = self.telefone.text;
+    self.contato.site = self.site.text;
+    self.contato.email = self.email.text;
 }
 
 

@@ -16,6 +16,9 @@
 		04B707171D5763BF00D11204 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04B707151D5763BF00D11204 /* LaunchScreen.storyboard */; };
 		04B707221D5763BF00D11204 /* AgendaContatosTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B707211D5763BF00D11204 /* AgendaContatosTests.m */; };
 		04B7072D1D5763C000D11204 /* AgendaContatosUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B7072C1D5763C000D11204 /* AgendaContatosUITests.m */; };
+		04B7073D1D576CD100D11204 /* Contato.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B7073C1D576CD100D11204 /* Contato.m */; };
+		04B707471D577EC500D11204 /* ListaContatoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B707461D577EC500D11204 /* ListaContatoViewController.m */; };
+		04B7074B1D57DAFD00D11204 /* ContatoDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B7074A1D57DAFD00D11204 /* ContatoDAO.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +56,12 @@
 		04B707281D5763C000D11204 /* AgendaContatosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AgendaContatosUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04B7072C1D5763C000D11204 /* AgendaContatosUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AgendaContatosUITests.m; sourceTree = "<group>"; };
 		04B7072E1D5763C000D11204 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		04B7073B1D576CD100D11204 /* Contato.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contato.h; sourceTree = "<group>"; };
+		04B7073C1D576CD100D11204 /* Contato.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contato.m; sourceTree = "<group>"; };
+		04B707451D577EC500D11204 /* ListaContatoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListaContatoViewController.h; sourceTree = "<group>"; };
+		04B707461D577EC500D11204 /* ListaContatoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListaContatoViewController.m; sourceTree = "<group>"; };
+		04B707491D57DAFD00D11204 /* ContatoDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContatoDAO.h; sourceTree = "<group>"; };
+		04B7074A1D57DAFD00D11204 /* ContatoDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContatoDAO.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +112,9 @@
 		04B707031D5763BF00D11204 /* AgendaContatos */ = {
 			isa = PBXGroup;
 			children = (
+				04B707481D57DADC00D11204 /* DAO */,
+				04B7073E1D577D9100D11204 /* View */,
+				04B7073A1D576B8A00D11204 /* Classe */,
 				04B707071D5763BF00D11204 /* AppDelegate.h */,
 				04B707081D5763BF00D11204 /* AppDelegate.m */,
 				04B7070A1D5763BF00D11204 /* ViewController.h */,
@@ -141,6 +153,33 @@
 				04B7072E1D5763C000D11204 /* Info.plist */,
 			);
 			path = AgendaContatosUITests;
+			sourceTree = "<group>";
+		};
+		04B7073A1D576B8A00D11204 /* Classe */ = {
+			isa = PBXGroup;
+			children = (
+				04B7073B1D576CD100D11204 /* Contato.h */,
+				04B7073C1D576CD100D11204 /* Contato.m */,
+			);
+			name = Classe;
+			sourceTree = "<group>";
+		};
+		04B7073E1D577D9100D11204 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				04B707451D577EC500D11204 /* ListaContatoViewController.h */,
+				04B707461D577EC500D11204 /* ListaContatoViewController.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		04B707481D57DADC00D11204 /* DAO */ = {
+			isa = PBXGroup;
+			children = (
+				04B707491D57DAFD00D11204 /* ContatoDAO.h */,
+				04B7074A1D57DAFD00D11204 /* ContatoDAO.m */,
+			);
+			name = DAO;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -276,8 +315,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04B7073D1D576CD100D11204 /* Contato.m in Sources */,
+				04B707471D577EC500D11204 /* ListaContatoViewController.m in Sources */,
 				04B7070C1D5763BF00D11204 /* ViewController.m in Sources */,
 				04B707091D5763BF00D11204 /* AppDelegate.m in Sources */,
+				04B7074B1D57DAFD00D11204 /* ContatoDAO.m in Sources */,
 				04B707121D5763BF00D11204 /* AgendaContatos.xcdatamodeld in Sources */,
 				04B707061D5763BF00D11204 /* main.m in Sources */,
 			);

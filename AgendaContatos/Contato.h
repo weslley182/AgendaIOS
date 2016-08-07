@@ -10,4 +10,12 @@
 
 @interface Contato : NSObject
 
+@property NSString *nome;
+@property NSString *endereco;
+@property NSString *telefone;
+@property NSString *site;
+@property NSString *email;
+
+@property NSMutableArray *contatos;
+
 @end
