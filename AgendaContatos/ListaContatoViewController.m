@@ -7,7 +7,6 @@
 //
 
 #import "ListaContatoViewController.h"
-#import "ViewController.h"
 #import "Contato.h"
 
 @interface ListaContatoViewController ()
@@ -26,11 +25,14 @@
         self.navigationItem.title = @"Lista de contatos";
         
         self.navigationItem.leftBarButtonItem = self.editButtonItem;
-        
+        [self inicializarLinha];
         self.contatoDAO = [ContatoDAO contatoDaoInstance];
     }
     return self;
-    
+}
+
+-(void)inicializarLinha{
+    self.linhaSelecionada = -1;
 }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -53,7 +55,7 @@
 -(void) exibirFormulario{
     UIStoryboard *storyB = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     ViewController *form = [storyB instantiateViewControllerWithIdentifier:@"Form-Contato"];
-    
+    form.delegate = self;
     if(self.contatoSelecionado){
         form.contato = self.contatoSelecionado;
     }
@@ -74,7 +76,6 @@
     if(!cell){
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identificador];
     }
-    
     Contato *contato = [self.contatoDAO contatoDoIndice:indexPath.row];
     cell.textLabel.text = contato.nome;
     
@@ -83,6 +84,29 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [self.tableView reloadData];
+}
+
+-(void)contatoAdicionado:(Contato *)poContato{
+    self.linhaSelecionada = [self.contatoDAO indiceDoContato:poContato];
+    NSString *sMensagem = [NSString stringWithFormat:@"Contato %@ adicionado com sucesso.",
+                           poContato.nome];
+    UIAlertController *alerta = [UIAlertController alertControllerWithTitle:@"Contato adicionado" message:sMensagem preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:nil];
+    [alerta addAction:ok];
+    
+    [self presentViewController:alerta animated:YES completion:nil];
+    NSLog(@"Adicionado: %@", poContato);
+}
+
+-(void)contatoAtualizado:(Contato *)poContato{
+    self.linhaSelecionada = [self.contatoDAO indiceDoContato:poContato];
+    NSLog(@"Atualizado: %@", poContato);
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    NSIndexPath *indexpath = [NSIndexPath indexPathForRow:self.linhaSelecionada inSection:0];
+    [self.tableView selectRowAtIndexPath:indexpath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    [self inicializarLinha];
 }
 
 @end

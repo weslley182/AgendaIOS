@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "Contato.h"
-
+#import "ListaContatoViewController.h"
 
 @implementation ViewController
 
@@ -66,6 +66,7 @@
 
 -(void)alterar{
     [self carregarContatos];
+    [self.delegate contatoAtualizado: self.contato];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -73,8 +74,9 @@
     self.contato = [Contato new];
     [self carregarContatos];
     [self.contatoDAO AdicionarContato: self.contato];
-    
     [self.navigationController popViewControllerAnimated:YES];
+    [self.delegate contatoAdicionado: self.contato];
+    
 }
 
 -(void) carregarContatos{

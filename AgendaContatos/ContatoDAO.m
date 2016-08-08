@@ -43,4 +43,9 @@ static ContatoDAO *defaultDao = nil;
 -(void)removerContato:(Contato *)poContato{
     [self.contatos removeObject:poContato];
 }
+
+-(NSInteger)indiceDoContato:(Contato *)poContato{
+    return [self.contatos indexOfObject:poContato];
+}
+
 @end

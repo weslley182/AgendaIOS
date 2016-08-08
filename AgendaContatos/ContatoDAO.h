@@ -16,6 +16,7 @@
 -(void) AdicionarContato:(Contato *)poContato;
 -(NSInteger) totalContatos;
 -(Contato *) contatoDoIndice:(NSInteger) pnIndice;
+-(NSInteger) indiceDoContato:(Contato *)poContato;
 +(ContatoDAO *) contatoDaoInstance;
 -(void) removerContato:(Contato *) poContato;
 
